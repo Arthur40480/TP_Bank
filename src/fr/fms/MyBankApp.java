@@ -43,8 +43,8 @@ public class MyBankApp {
 //		bankJob.pay(secondAccount.getAccountId(), 1000);	// versement de 1000 euros sur le compte de julie
 //		
 //		//banquier ou client
-//		bankJob.withdraw(100200300, 250);			// retrait de 250 euros sur le compte de robert
-//		bankJob.withdraw(200300400, 400);			// retrait de 400 euros sur le compte de julie
+		bankJob.withdraw(100200300, 250);			// retrait de 250 euros sur le compte de robert
+		bankJob.withdraw(200300400, 400);			// retrait de 400 euros sur le compte de julie
 //		
 //		//banquier ou client
 //		bankJob.transfert(firstAccount.getAccountId(), 200300400, 200);		// virement de robert chez julie de 200
@@ -105,7 +105,7 @@ public class MyBankApp {
 		}
 		System.out.println("Authentification réussie !");
 		System.out.println();
-		System.out.println("Bienvenu " + account.getCustomer().getName() + ", que souhaitez vous faire ?");
+		System.out.println("Bienvenu " + account.getCustomer().getFirstName() + ", que souhaitez vous faire ?");
 		return account;
 	}
 	
@@ -149,7 +149,9 @@ public class MyBankApp {
 				displayMenu(scanner, account);
 				break;
 			case 5:
-				System.out.println("Choix numéro 5");
+				account.getListTransactions().stream()
+					.forEach(transaction -> System.out.println(transaction));
+				displayMenu(scanner, account);
 				break;
 			case 6:
 				System.out.println("Au revoir !");
