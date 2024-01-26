@@ -78,6 +78,12 @@ public class MyBankApp {
 		Scanner scanner = new Scanner(System.in);
 		displayMainMenu(scanner);
 	}
+	
+	/**
+	 * Renvoi le choix de l'utilisateur pour le menu principale
+	 * @param scanner 
+	 * @return int
+	 */
 	public static int displayMainMenu(Scanner scanner) {
 		int userChoice;
 		System.out.println("Bonjour, que voulez-vous faire ? taper le numéro correspondant");
