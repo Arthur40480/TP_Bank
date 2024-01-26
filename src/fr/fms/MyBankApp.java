@@ -24,18 +24,18 @@ import fr.fms.entities.Transaction;
 public class MyBankApp {	
 	public static void main(String[] args) {
 //		//représente l'activité de notre banque
-//		IBankImpl bankJob = new IBankImpl();
+		IBankImpl bankJob = new IBankImpl();
 //		
 //		System.out.println("création puis affichage de 2 comptes bancaires");
-//		Customer robert = new Customer(1, "dupont", "robert", "robert.dupont@xmail.com");
+		Customer robert = new Customer(1, "dupont", "robert", "robert.dupont@xmail.com");
 //		Customer julie = new Customer(2, "jolie", "julie", "julie.jolie@xmail.com");		
-//		Current firstAccount = new Current(100200300, new Date(), 1500, 200 , robert);
+		Current firstAccount = new Current(100200300, new Date(), 1500, 200 , robert);
 //		Saving secondAccount = new Saving(200300400, new Date(), 2000, 5.5, julie);
 //		
 //		System.out.println(firstAccount);
 //		System.out.println(secondAccount);		
 //		
-//		bankJob.addAccount(firstAccount);
+		bankJob.addAccount(firstAccount);
 //		bankJob.addAccount(firstAccount);
 //		bankJob.addAccount(secondAccount);
 //		
@@ -76,31 +76,30 @@ public class MyBankApp {
 //		for(Transaction trans : bankJob.listTransactions(200300400))
 //			System.out.println(trans);
 		Scanner scanner = new Scanner(System.in);
-		displayMainMenu(scanner);
+		conectUser(scanner, bankJob);
 	}
 	
-	/**
-	 * Renvoi le choix de l'utilisateur pour le menu principale
-	 * @param scanner 
-	 * @return int
-	 */
-	public static int displayMainMenu(Scanner scanner) {
-		int userChoice;
-		System.out.println("Bonjour, que voulez-vous faire ? taper le numéro correspondant");
-		System.out.println("1: S'inscrire - 2: Se connecter à votre espace client - 3: Quitter l'application");
+
+	public static Account conectUser(Scanner scanner, IBankImpl bankJob) {
+		int accountId;
+		Account account;
+		System.out.println("\n------------------- BANQUE HARMONIE -----------------------");
+		System.out.println("Saisissez un numéro de compte bancaire valide");
 		while(true) {
 			try {
-				userChoice = scanner.nextInt();
-				if(userChoice > 0 && userChoice < 4) {
+				accountId = scanner.nextInt();
+				account = bankJob.consultAccount(accountId);
+				if(account != null) {
 					break;
 				} else {
-					System.out.println("Erreur : Veuillez saisir un choix correct (1 - 3)");
+					System.out.println("Saisissez un numéro de compte bancaire valide");
 				}
 			} catch(InputMismatchException e) {
-				System.out.println("Erreur : Veuillez saisir un choix correct");
+				System.out.println("Erreur : veuillez saisir un numéro de compte valide");
 				scanner.next();
 			}
 		}
-		return userChoice;
+		System.out.println("Authentification réussie !");
+		return account;
 	}
 }

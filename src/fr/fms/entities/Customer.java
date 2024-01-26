@@ -6,6 +6,7 @@
 package fr.fms.entities;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Customer {
 	private long customerId;
@@ -22,7 +23,7 @@ public class Customer {
 		this.email = email;
 		this.listAccounts = new ArrayList<Account>();
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", name=" + name + ", firstName=" + firstName + ", email=" + email
