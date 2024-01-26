@@ -25,6 +25,6 @@ public class Current extends Account {
 
 	@Override
 	public String toString() {
-		return "Current Account " + super.toString() +  ",\n\t\t overdraft=" + overdraft + "]";
+		return "Current Account " + super.toString() +  ", overdraft=" + overdraft + "]";
 	}
 }

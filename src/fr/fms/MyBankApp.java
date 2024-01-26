@@ -28,16 +28,15 @@ public class MyBankApp {
 //		
 //		System.out.println("création puis affichage de 2 comptes bancaires");
 		Customer robert = new Customer(1, "dupont", "robert", "robert.dupont@xmail.com");
-//		Customer julie = new Customer(2, "jolie", "julie", "julie.jolie@xmail.com");		
+		Customer julie = new Customer(2, "jolie", "julie", "julie.jolie@xmail.com");		
 		Current firstAccount = new Current(100200300, new Date(), 1500, 200 , robert);
-//		Saving secondAccount = new Saving(200300400, new Date(), 2000, 5.5, julie);
+		Saving secondAccount = new Saving(200300400, new Date(), 2000, 5.5, julie);
 //		
 //		System.out.println(firstAccount);
 //		System.out.println(secondAccount);		
 //		
 		bankJob.addAccount(firstAccount);
-//		bankJob.addAccount(firstAccount);
-//		bankJob.addAccount(secondAccount);
+		bankJob.addAccount(secondAccount);
 //		
 //		//banquier ou client
 //		bankJob.pay(firstAccount.getAccountId(),500);		// versement de 500 euros sur le compte de robert
@@ -76,8 +75,7 @@ public class MyBankApp {
 //		for(Transaction trans : bankJob.listTransactions(200300400))
 //			System.out.println(trans);
 		Scanner scanner = new Scanner(System.in);
-//		conectUser(scanner, bankJob);
-		displayMenu(scanner);
+		displayMenu(scanner, conectUser(scanner, bankJob));
 	}
 	
 	/**
@@ -111,7 +109,12 @@ public class MyBankApp {
 		return account;
 	}
 	
-	public static void displayMenu(Scanner scanner) {
+	/**
+	 * Méthode qui permet d'afficher le menu et d'apeller la méthode corréspondante au choix de l'utilisateur
+	 * @param scanner correspond à l'objet Scanner
+	 * @param account qui fait référence au compte sur lequel les opérations vont être effectuer
+	 */
+	public static void displayMenu(Scanner scanner, Account account) {
 		int userChoice;
 		System.out.println("------------------- taper le numéro correspondant -----------------------");
 		System.out.println("1:Versement - 2:Retrait - 3:Virement - 4:Information sur ce compte - 5:Liste des opérations - 6:Sortir");
@@ -141,7 +144,9 @@ public class MyBankApp {
 				System.out.println("Choix numéro 3");
 				break;
 			case 4:
-				System.out.println("Choix numéro 4");
+				System.out.println(account);
+				System.out.println();
+				displayMenu(scanner, account);
 				break;
 			case 5:
 				System.out.println("Choix numéro 5");

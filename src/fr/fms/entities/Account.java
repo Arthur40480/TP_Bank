@@ -32,7 +32,7 @@ public abstract class Account {
 	
 	@Override
 	public String toString() {
-		return " [accountId=" + accountId + ", creationDate=" + SIMPLE_DATE_FORMAT.format(creationDate) + ", balance=" + balance + ", \n\t" + customer ;
+		return " [accountId=" + accountId + ", creationDate=" + SIMPLE_DATE_FORMAT.format(creationDate) + ", balance=" + balance;
 	}
 
 	public Customer getCustomer() {
