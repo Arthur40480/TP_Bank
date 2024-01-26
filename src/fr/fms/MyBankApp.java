@@ -76,10 +76,16 @@ public class MyBankApp {
 //		for(Transaction trans : bankJob.listTransactions(200300400))
 //			System.out.println(trans);
 		Scanner scanner = new Scanner(System.in);
-		conectUser(scanner, bankJob);
+//		conectUser(scanner, bankJob);
+		displayMenu(scanner);
 	}
 	
-
+	/**
+	 * Méthode qui permet à l'utilisateur de se connecter
+	 * @param scanner correspond à l'objet Scanner
+	 * @param bankJob fait référence à la banque associée à ce compte
+	 * @return account qui fait référence au compte sur lequel le client viens de se connecter
+	 */
 	public static Account conectUser(Scanner scanner, IBankImpl bankJob) {
 		int accountId;
 		Account account;
@@ -100,6 +106,52 @@ public class MyBankApp {
 			}
 		}
 		System.out.println("Authentification réussie !");
+		System.out.println();
+		System.out.println("Bienvenu " + account.getCustomer().getName() + ", que souhaitez vous faire ?");
 		return account;
+	}
+	
+	public static void displayMenu(Scanner scanner) {
+		int userChoice;
+		System.out.println("------------------- taper le numéro correspondant -----------------------");
+		System.out.println("1:Versement - 2:Retrait - 3:Virement - 4:Information sur ce compte - 5:Liste des opérations - 6:Sortir");
+		
+		while(true) {
+			try {
+				userChoice = scanner.nextInt();
+				if(userChoice > 0 && userChoice < 7) {
+					break;
+				} else {
+					System.out.println("Erreur : veuillez saisir numéro de choix valable (1 - 6)");
+				}
+			} catch(InputMismatchException e) {
+				System.out.println("Erreur : veuillez saisir numéro de choix valable (1 - 6)");
+				scanner.next();
+			}
+		}
+		
+		switch(userChoice) {
+			case 1:
+				System.out.println("Choix numéro 1");
+				break;
+			case 2:
+				System.out.println("Choix numéro 2");
+				break;
+			case 3:
+				System.out.println("Choix numéro 3");
+				break;
+			case 4:
+				System.out.println("Choix numéro 4");
+				break;
+			case 5:
+				System.out.println("Choix numéro 5");
+				break;
+			case 6:
+				System.out.println("Au revoir !");
+				System.exit(0);
+				break;
+			
+		}
+
 	}
 }
