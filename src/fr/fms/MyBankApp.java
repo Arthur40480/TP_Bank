@@ -76,7 +76,7 @@ public class MyBankApp {
 //			System.out.println(trans);
 			
 		Scanner scanner = new Scanner(System.in);
-		displayMenu(scanner, getUserAccount(scanner, bankJob, "Saisissez un numéro de compte bancaire valide"), bankJob);
+		getUserAccount(scanner, bankJob);
 			
 	}
 	 
@@ -87,10 +87,10 @@ public class MyBankApp {
 	 * @param message fait référence au message qui s'affiche pour indiquer les instructions à l'utilisateur
 	 * @return account qui fait référence au compte sur lequel le client viens de se connecter
 	 */
-	public static Account getUserAccount(Scanner scanner, IBankImpl bankJob, String message) {
+	public static void getUserAccount(Scanner scanner, IBankImpl bankJob) {
 		int accountId;
 		Account account;
-		System.out.println(message);
+		System.out.println("Saisissez un numéro de compte bancaire valide");
 		while(true) {
 			try {
 				accountId = scanner.nextInt();
@@ -105,7 +105,7 @@ public class MyBankApp {
 				scanner.next();
 			}
 		}
-		return account;
+		displayMenu(scanner, account, bankJob);
 	}
 	
 	/**
@@ -166,8 +166,8 @@ public class MyBankApp {
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 6:
-				System.out.println("Au revoir !");
-				System.exit(0);
+				System.out.println("Déconnexion réussie");
+				getUserAccount(scanner, bankJob);
 				break;
 			
 		}
