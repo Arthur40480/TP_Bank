@@ -75,7 +75,7 @@ public class MyBankApp {
 //		for(Transaction trans : bankJob.listTransactions(200300400))
 //			System.out.println(trans);
 		Scanner scanner = new Scanner(System.in);
-		displayMenu(scanner, conectUser(scanner, bankJob));
+		displayMenu(scanner, conectUser(scanner, bankJob), bankJob);
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class MyBankApp {
 	 * @param scanner correspond à l'objet Scanner
 	 * @param account qui fait référence au compte sur lequel les opérations vont être effectuer
 	 */
-	public static void displayMenu(Scanner scanner, Account account) {
+	public static void displayMenu(Scanner scanner, Account account, IBankImpl bankJob) {
 		int userChoice;
 		System.out.println("------------------- taper le numéro correspondant -----------------------");
 		System.out.println("1:Versement - 2:Retrait - 3:Virement - 4:Information sur ce compte - 5:Liste des opérations - 6:Sortir");
@@ -138,7 +138,9 @@ public class MyBankApp {
 				System.out.println("Choix numéro 1");
 				break;
 			case 2:
-				System.out.println("Choix numéro 2");
+				double amount = Account.isWithdrawalPossible(scanner);
+				bankJob.withdraw(account.getAccountId(), amount);	
+				displayMenu(scanner, account, bankJob);
 				break;
 			case 3:
 				System.out.println("Choix numéro 3");
@@ -146,12 +148,13 @@ public class MyBankApp {
 			case 4:
 				System.out.println(account);
 				System.out.println();
-				displayMenu(scanner, account);
+				displayMenu(scanner, account, bankJob);
 				break;
 			case 5:
 				account.getListTransactions().stream()
 					.forEach(transaction -> System.out.println(transaction));
-				displayMenu(scanner, account);
+				System.out.println();
+				displayMenu(scanner, account, bankJob);
 				break;
 			case 6:
 				System.out.println("Au revoir !");

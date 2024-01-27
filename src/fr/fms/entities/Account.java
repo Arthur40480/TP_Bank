@@ -9,6 +9,8 @@ package fr.fms.entities;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public abstract class Account {
 	private long accountId;
@@ -28,6 +30,26 @@ public abstract class Account {
 		this.customer.getListAccounts().add(this);		//lorsque j'ajoute un compte à un client, 
 														//j'ajoute à la liste de comptes du client ce nouveau compte
 		this.listTransactions = new ArrayList<Transaction>();
+	}
+	
+	/**
+	 * Méthode qui permet de vérifier le montant à retirer
+	 * @param scanner correspond à l'objet Scanner
+	 * @return amount correspond au montant que le client veux retirer
+	 */
+	public static double isWithdrawalPossible(Scanner scanner) {
+		double amount;
+		System.out.println("Saissisez le montant à retirer sur ce compte");
+		while(true) {
+			try {
+				amount = scanner.nextInt();
+				break;
+			} catch(InputMismatchException e) {
+				System.out.println("Saissisez un montant valide");
+				scanner.next();
+			}
+		}
+		return amount;
 	}
 	
 	@Override
