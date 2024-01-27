@@ -37,9 +37,9 @@ public abstract class Account {
 	 * @param scanner correspond à l'objet Scanner
 	 * @return amount correspond au montant que le client veux retirer
 	 */
-	public static double isWithdrawalPossible(Scanner scanner) {
+	public static double isWithdrawalPossible(Scanner scanner, String message) {
 		double amount;
-		System.out.println("Saissisez le montant à retirer sur ce compte");
+		System.out.println(message);
 		while(true) {
 			try {
 				amount = scanner.nextInt();

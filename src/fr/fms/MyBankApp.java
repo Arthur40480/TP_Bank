@@ -74,21 +74,23 @@ public class MyBankApp {
 //		System.out.println("-------------------liste des transactions du compte N° 200300400 de Julie------------------------");
 //		for(Transaction trans : bankJob.listTransactions(200300400))
 //			System.out.println(trans);
+			
 		Scanner scanner = new Scanner(System.in);
-		displayMenu(scanner, conectUser(scanner, bankJob), bankJob);
+		displayMenu(scanner, getUserAccount(scanner, bankJob, "Saisissez un numéro de compte bancaire valide"), bankJob);
+			
 	}
-	
+	 
 	/**
-	 * Méthode qui permet à l'utilisateur de se connecter
+	 * Méthode qui de renvoyer le compte de l'utilisateur en ayant vérifier sa saisie
 	 * @param scanner correspond à l'objet Scanner
 	 * @param bankJob fait référence à la banque associée à ce compte
+	 * @param message fait référence au message qui s'affiche pour indiquer les instructions à l'utilisateur
 	 * @return account qui fait référence au compte sur lequel le client viens de se connecter
 	 */
-	public static Account conectUser(Scanner scanner, IBankImpl bankJob) {
+	public static Account getUserAccount(Scanner scanner, IBankImpl bankJob, String message) {
 		int accountId;
 		Account account;
-		System.out.println("\n------------------- BANQUE HARMONIE -----------------------");
-		System.out.println("Saisissez un numéro de compte bancaire valide");
+		System.out.println(message);
 		while(true) {
 			try {
 				accountId = scanner.nextInt();
@@ -103,19 +105,17 @@ public class MyBankApp {
 				scanner.next();
 			}
 		}
-		System.out.println("Authentification réussie !");
-		System.out.println();
-		System.out.println("Bienvenu " + account.getCustomer().getFirstName() + ", que souhaitez vous faire ?");
 		return account;
 	}
 	
 	/**
-	 * Méthode qui permet d'afficher le menu et d'apeller la méthode corréspondante au choix de l'utilisateur
+	 * Méthode qui permet d'afficher le menu et d'apeller la méthode correspondante au choix de l'utilisateur
 	 * @param scanner correspond à l'objet Scanner
 	 * @param account qui fait référence au compte sur lequel les opérations vont être effectuer
 	 */
 	public static void displayMenu(Scanner scanner, Account account, IBankImpl bankJob) {
 		int userChoice;
+		System.out.println("Bienvenu " + account.getCustomer().getFirstName() + ", que souhaitez vous faire ?");
 		System.out.println("------------------- taper le numéro correspondant -----------------------");
 		System.out.println("1:Versement - 2:Retrait - 3:Virement - 4:Information sur ce compte - 5:Liste des opérations - 6:Sortir");
 		
@@ -138,12 +138,18 @@ public class MyBankApp {
 				System.out.println("Choix numéro 1");
 				break;
 			case 2:
-				double amount = Account.isWithdrawalPossible(scanner);
-				bankJob.withdraw(account.getAccountId(), amount);	
+				String withdrawAmoutMessage = "Saissisez le montant à retirer sur ce compte";
+				double withdrawAmount = Account.isWithdrawalPossible(scanner, withdrawAmoutMessage);
+				bankJob.withdraw(account.getAccountId(), withdrawAmount);	
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 3:
-				System.out.println("Choix numéro 3");
+				String transfertAmountMessage = "Saisissez le montant à virer sur ce compte";
+				String transfertMessage = "Saisissez le numéro de compte destinataire";
+				Account destinationAccount = getUserAccount(scanner, bankJob, transfertMessage);
+				double transfertAmout = Account.isWithdrawalPossible(scanner, transfertAmountMessage);
+				bankJob.transfert(account.getAccountId(), destinationAccount.getAccountId(), transfertAmout);
+				displayMenu(scanner, account, bankJob);
 				break;
 			case 4:
 				System.out.println(account);
