@@ -33,11 +33,11 @@ public abstract class Account {
 	}
 	
 	/**
-	 * Méthode qui permet de vérifier le montant à retirer
+	 * Méthode qui permet de vérifier la saisie de l'utilisateur concernant le montant de l'opération
 	 * @param scanner correspond à l'objet Scanner
 	 * @return amount correspond au montant que le client veux retirer
 	 */
-	public static double isWithdrawalPossible(Scanner scanner, String message) {
+	public static double isValidAmount(Scanner scanner, String message) {
 		double amount;
 		System.out.println(message);
 		while(true) {

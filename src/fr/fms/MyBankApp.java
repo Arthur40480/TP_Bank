@@ -135,25 +135,28 @@ public class MyBankApp {
 		
 		switch(userChoice) {
 			case 1:
-				System.out.println("Choix numéro 1");
+				double payAmount = Account.isValidAmount(scanner, "Saisissez le montant à verser sur le compte");
+				
+				bankJob.pay(account.getAccountId(), payAmount);
+				displayMenu(scanner, account, bankJob);
 				break;
 			case 2:
-				String withdrawAmoutMessage = "Saissisez le montant à retirer sur ce compte";
-				double withdrawAmount = Account.isWithdrawalPossible(scanner, withdrawAmoutMessage);
+				double withdrawAmount = Account.isValidAmount(scanner, "Saissisez le montant à retirer sur ce compte");
+				
 				bankJob.withdraw(account.getAccountId(), withdrawAmount);	
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 3:
-				String transfertAmountMessage = "Saisissez le montant à virer sur ce compte";
-				String transfertMessage = "Saisissez le numéro de compte destinataire";
-				Account destinationAccount = getUserAccount(scanner, bankJob, transfertMessage);
-				double transfertAmout = Account.isWithdrawalPossible(scanner, transfertAmountMessage);
+				Account destinationAccount = getUserAccount(scanner, bankJob, "Saisissez le numéro de compte destinataire");
+				double transfertAmout = Account.isValidAmount(scanner, "Saisissez le montant à virer sur ce compte");
+				
 				bankJob.transfert(account.getAccountId(), destinationAccount.getAccountId(), transfertAmout);
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 4:
 				System.out.println(account);
 				System.out.println();
+				
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 5:
