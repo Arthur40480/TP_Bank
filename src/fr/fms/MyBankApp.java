@@ -76,10 +76,24 @@ public class MyBankApp {
 //			System.out.println(trans);
 			
 		Scanner scanner = new Scanner(System.in);
-		getUserAccount(scanner, bankJob);
+		userConnect(scanner, bankJob);
 			
 	}
-	 
+	
+	/**
+	 * Méthode qui représente la connexion de l'utilisateur à sont compte
+	 * @param scanner correspond à l'objet Scanner
+	 * @param bankJob fait référence à la banque associée à ce compte
+	 * @param message fait référence au message qui s'affiche pour indiquer les instructions à l'utilisateur
+	 */
+	public static void userConnect(Scanner scanner, IBankImpl bankJob) {
+		System.out.println("------------------- LA BANQUE DES PAUVRES ------------------------");
+		Account account = getUserAccount(scanner, bankJob, "Saisissez un numéro de compte bancaire valide");
+		System.out.println();
+		System.out.println("Bienvenu " + account.getCustomer().getFirstName() + ", que souhaitez vous faire ?");
+		displayMenu(scanner, account, bankJob);
+	}
+	
 	/**
 	 * Méthode qui de renvoyer le compte de l'utilisateur en ayant vérifier sa saisie
 	 * @param scanner correspond à l'objet Scanner
@@ -87,10 +101,10 @@ public class MyBankApp {
 	 * @param message fait référence au message qui s'affiche pour indiquer les instructions à l'utilisateur
 	 * @return account qui fait référence au compte sur lequel le client viens de se connecter
 	 */
-	public static void getUserAccount(Scanner scanner, IBankImpl bankJob) {
+	public static Account getUserAccount(Scanner scanner, IBankImpl bankJob, String message) {
 		int accountId;
 		Account account;
-		System.out.println("Saisissez un numéro de compte bancaire valide");
+		System.out.println(message);
 		while(true) {
 			try {
 				accountId = scanner.nextInt();
@@ -105,7 +119,7 @@ public class MyBankApp {
 				scanner.next();
 			}
 		}
-		displayMenu(scanner, account, bankJob);
+		return account;
 	}
 	
 	/**
@@ -115,7 +129,6 @@ public class MyBankApp {
 	 */
 	public static void displayMenu(Scanner scanner, Account account, IBankImpl bankJob) {
 		int userChoice;
-		System.out.println("Bienvenu " + account.getCustomer().getFirstName() + ", que souhaitez vous faire ?");
 		System.out.println("------------------- taper le numéro correspondant -----------------------");
 		System.out.println("1:Versement - 2:Retrait - 3:Virement - 4:Information sur ce compte - 5:Liste des opérations - 6:Sortir");
 		
@@ -136,27 +149,23 @@ public class MyBankApp {
 		switch(userChoice) {
 			case 1:
 				double payAmount = Account.isValidAmount(scanner, "Saisissez le montant à verser sur le compte");
-				
 				bankJob.pay(account.getAccountId(), payAmount);
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 2:
-				double withdrawAmount = Account.isValidAmount(scanner, "Saissisez le montant à retirer sur ce compte");
-				
+				double withdrawAmount = Account.isValidAmount(scanner, "Saissisez le montant à retirer sur ce compte");	
 				bankJob.withdraw(account.getAccountId(), withdrawAmount);	
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 3:
 				Account destinationAccount = getUserAccount(scanner, bankJob, "Saisissez le numéro de compte destinataire");
-				double transfertAmout = Account.isValidAmount(scanner, "Saisissez le montant à virer sur ce compte");
-				
+				double transfertAmout = Account.isValidAmount(scanner, "Saisissez le montant à virer sur ce compte");		
 				bankJob.transfert(account.getAccountId(), destinationAccount.getAccountId(), transfertAmout);
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 4:
 				System.out.println(account);
-				System.out.println();
-				
+				System.out.println();				
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 5:
@@ -166,11 +175,10 @@ public class MyBankApp {
 				displayMenu(scanner, account, bankJob);
 				break;
 			case 6:
-				System.out.println("Déconnexion réussie");
-				getUserAccount(scanner, bankJob);
-				break;
-			
+				System.out.println("Deconnexion réussie");
+				System.out.println();
+				userConnect(scanner, bankJob);
+				break;			
 		}
-
 	}
 }
