@@ -59,12 +59,18 @@ public class IBankImpl implements IBank {
 	 * @param amount correspond au montant à verser
 	 */
 	@Override
-	public void pay(long accountId, double amount) {				
-		Account account = consultAccount(accountId);
-		if(account != null)	{
-			account.setBalance(account.getBalance() + amount);
-			Transaction trans = new Transfert(numTransactions++,new Date(),amount,accountId);
-			account.getListTransactions().add(trans);				// création + ajout d'une opération de versement
+	public void pay(long accountId, double amount) {
+		if(amount < 0) {
+			System.out.println("Vous ne pouvez pas utiliser un montant négatif pour un versement.");
+			System.out.println();
+		} else {
+			Account account = consultAccount(accountId);
+			if(account != null)	{
+				account.setBalance(account.getBalance() + amount);
+				Transaction trans = new Transfert(numTransactions++,new Date(),amount,accountId);
+				account.getListTransactions().add(trans);	// création + ajout d'une opération de versement
+			}
+				
 		}
 	}
 
@@ -89,6 +95,7 @@ public class IBankImpl implements IBank {
 			}
 			else {
 				System.out.println("vous avez dépassé vos capacités de retrait !");
+				System.out.println();
 				return false;
 			}
 		}	

@@ -31,20 +31,22 @@ public class MyBankApp {
 		Customer julie = new Customer(2, "jolie", "julie", "julie.jolie@xmail.com");		
 		Current firstAccount = new Current(100200300, new Date(), 1500, 200 , robert);
 		Saving secondAccount = new Saving(200300400, new Date(), 2000, 5.5, julie);
-//		
+		
+		bankJob.addAccount(firstAccount);
+		bankJob.addAccount(secondAccount);
+		
 //		System.out.println(firstAccount);
 //		System.out.println(secondAccount);		
 //		
-		bankJob.addAccount(firstAccount);
-		bankJob.addAccount(secondAccount);
+
 //		
 //		//banquier ou client
 //		bankJob.pay(firstAccount.getAccountId(),500);		// versement de 500 euros sur le compte de robert
 //		bankJob.pay(secondAccount.getAccountId(), 1000);	// versement de 1000 euros sur le compte de julie
 //		
 //		//banquier ou client
-		bankJob.withdraw(100200300, 250);			// retrait de 250 euros sur le compte de robert
-		bankJob.withdraw(200300400, 400);			// retrait de 400 euros sur le compte de julie
+//		bankJob.withdraw(100200300, 250);			// retrait de 250 euros sur le compte de robert
+//		bankJob.withdraw(200300400, 400);			// retrait de 400 euros sur le compte de julie
 //		
 //		//banquier ou client
 //		bankJob.transfert(firstAccount.getAccountId(), 200300400, 200);		// virement de robert chez julie de 200
